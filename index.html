@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mohaserei System Network (MSN) — Ecosystem Fund Model</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Kantumruy+Pro:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Kantumruy Pro', 'Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            msn: {
+              bg: '#040814',
+              surface: '#0a1226',
+              cyan: '#00f0ff',
+              emerald: '#10b981',
+              amber: '#f59e0b',
+              violet: '#a78bfa',
+            },
+          },
+          boxShadow: {
+            holoCyan: '0 0 24px rgba(0, 240, 255, 0.22)',
+            holoEmerald: '0 0 22px rgba(16, 185, 129, 0.22)',
+            holoAmber: '0 0 22px rgba(245, 158, 11, 0.2)',
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    :root {
+      color-scheme: dark;
+    }
+
+    body {
+      background-color: #040814;
+      color: #f1f5f9;
+      overflow-x: hidden;
+    }
+
+    .fund-hologram-bg {
+      background-image:
+        radial-gradient(circle at 12% 8%, rgba(0, 240, 255, 0.14), transparent 42%),
+        radial-gradient(circle at 88% 15%, rgba(16, 185, 129, 0.12), transparent 40%),
+        radial-gradient(circle at 52% 92%, rgba(245, 158, 11, 0.08), transparent 45%),
+        linear-gradient(to right, rgba(0, 240, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 240, 255, 0.04) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+    }
+
+    .holo-panel {
+      background: linear-gradient(155deg, rgba(11, 20, 40, 0.86) 0%, rgba(5, 9, 20, 0.94) 100%);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      box-shadow: 0 18px 42px -14px rgba(0, 0, 0, 0.88), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    .holo-panel-emerald {
+      background: linear-gradient(155deg, rgba(10, 31, 38, 0.86) 0%, rgba(5, 13, 25, 0.94) 100%);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(16, 185, 129, 0.28);
+      box-shadow: 0 18px 42px -14px rgba(0, 0, 0, 0.88), inset 0 1px 0 rgba(167, 243, 208, 0.07);
+    }
+
+    input[type='range'] {
+      accent-color: #00f0ff;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+    }
+
+    .pulse-beacon {
+      animation: beaconPulse 2.1s infinite;
+    }
+
+    @keyframes beaconPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(0.84); }
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(10, 18, 38, 0.8);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(0, 240, 255, 0.26);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 240, 255, 0.46);
+    }
+  </style>
+</head>
+<body class="fund-hologram-bg min-h-screen font-sans text-slate-100 antialiased selection:bg-[#00f0ff]/25 selection:text-[#00f0ff]">
+  <!-- Top Bar -->
+  <header class="sticky top-0 z-30 border-b border-[#00f0ff]/15 bg-[#040814]/88 backdrop-blur-xl">
+    <div class="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <!-- Brand & Module Badge -->
+        <div class="flex items-center gap-3">
+          <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-[#00f0ff]/40 bg-[#00f0ff]/10 text-[#00f0ff] shadow-holoCyan">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 7v10" />
+              <path d="M15 9.5a3 3 0 0 0-3-1.5c-1.7 0-3 1-3 2.3s1.3 2.1 3 2.4 3 1.1 3 2.4-1.3 2.3-3 2.3a3 3 0 0 1-3-1.5" />
+            </svg>
+          </div>
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="text-sm font-bold tracking-wide text-white sm:text-base" data-i18n="brandTitle">
+                Mohaserei System Network (MSN)
+              </span>
+              <span class="rounded-md border border-[#00f0ff]/35 bg-[#00f0ff]/10 px-2 py-0.5 font-mono text-[11px] font-semibold text-[#00f0ff]">
+                ECOSYSTEM FUND MODEL
+              </span>
+            </div>
+            <p class="text-xs text-slate-400" data-i18n="brandSubtitle">
+              Capital Allocation, UES/HCV Community Yield &amp; 25-Region Treasury Model
+            </p>
+          </div>
+        </div>
+
+        <!-- Scenario Presets, Voice Brief, Export & Reset -->
+        <div class="flex flex-wrap items-center gap-2">
+          <div class="hidden items-center gap-1 rounded-xl border border-slate-700/80 bg-[#0a1226] p-1 text-xs md:flex" role="group" aria-label="Scenario presets">
+            <button type="button" data-preset="conservative" class="preset-btn rounded-lg px-2.5 py-1 font-medium transition focus:outline-none focus:ring-2 focus:ring-[#00f0ff]" data-i18n="presetConservative">
+              Conservative
+            </button>
+            <button type="button" data-preset="baseline" class="preset-btn rounded-lg px-2.5 py-1 font-medium transition focus:outline-none focus:ring-2 focus:ring-[#00f0ff]" data-i18n="presetBaseline">
+              Baseline
+            </button>
+            <button type="button" data-preset="expansion" class="preset-btn rounded-lg px-2.5 py-1 font-medium transition focus:outline-none focus:ring-2 focus:ring-[#00f0ff]" data-i18n="presetExpansion">
+              Expansion
+            </button>
+          </div>
+
+          <button
+            type="button"
+            id="voiceBriefBtn"
+            class="flex items-center gap-1.5 rounded-xl border border-[#00f0ff]/35 bg-[#00f0ff]/10 px-3 py-1.5 text-xs font-semibold text-[#00f0ff] transition hover:bg-[#00f0ff]/20 focus:outline-none focus:ring-2 focus:ring-[#00f0ff]"
+          >
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+            </svg>
+            <span data-i18n="voiceBriefBtn">Voice Brief</span>
+          </button>
+
+          <button
+            type="button"
+            id="exportJsonBtn"
+            class="flex items-center gap-1.5 rounded-xl border border-[#10b981]/35 bg-[#10b981]/10 px-3 py-1.5 font-mono text-xs font-semibold text-[#10b981] transition hover:bg-[#10b981]/20 focus:outline-none focus:ring-2 focus:ring-[#10b981]"
+          >
+            <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            <span data-i18n="exportBtn">Export JSON</span>
+          </button>
+
+          <button
+            type="button"
+            id="resetStateBtn"
+            class="flex items-center gap-1.5 rounded-xl border border-amber-400/35 bg-amber-500/10 px-3 py-1.5 text-xs font-semibold text-amber-300 transition hover:bg-amber-500/20 focus:outline-none focus:ring-2 focus:ring-amber-400"
+          >
+            <span data-i18n="resetBtn">Reset</span>
+          </button>
+
+          <div class="flex items-center rounded-xl border border-slate-700/80 bg-[#0a1226] p-0.5 text-xs" role="group" aria-label="Language switch">
+            <button type="button" data-lang="en" class="lang-btn rounded-lg px-2.5 py-1 font-medium transition focus:outline-none focus:ring-2 focus:ring-[#00f0ff]">EN</button>
+            <button type="button" data-lang="km" class="lang-btn rounded-lg px-2.5 py-1 font-medium transition focus:outline-none focus:ring-2 focus:ring-[#00f0ff]">ខ្មែរ</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Toast Banner Container -->
+  <div
+    id="toastHost"
+    class="pointer-events-none fixed bottom-5 right-5 z-50 flex max-w-sm flex-col gap-2"
+    aria-live="polite"
+  ></div>
+
+  <main class="mx-auto max-w-7xl space-y-6 px-4 py-6 sm:px-6 lg:px-8">
+    <!-- Hero & 4 Live KPI Cards -->
+    <section class="space-y-4">
+      <div class="holo-panel rounded-2xl p-5 sm:p-6">
+        <div class="flex flex-col justify-between gap-4 lg:flex-row lg:items-center">
+          <div class="max-w-3xl space-y-1.5">
+            <div class="inline-flex items-center gap-2 rounded-full border border-[#00f0ff]/35 bg-[#00f0ff]/10 px-3 py-1 font-mono text-[11px] text-[#00f0ff]">
+              <span class="h-2 w-2 rounded-full bg-[#10b981] pulse-beacon"></span>
+              <span data-i18n="heroBadge">MOHASEREI SYSTEM NETWORK (MSN) · FUND ARCHITECTURE 2026–2032</span>
+            </div>
+            <h1 class="text-xl font-bold tracking-tight text-white sm:text-2xl lg:text-3xl" data-i18n="heroTitle">
+              Mohaserei Ecosystem Fund Model
+            </h1>
+            <p class="text-xs leading-relaxed text-slate-300 sm:text-sm" data-i18n="heroDesc">
+              Model capital tranches across Ecosystem Growth &amp; Infrastructure, Member UES &amp; Community Grants, Liquidity &amp; MSN Coin Reserve, and Governance &amp; Security Reserve across Cambodia's 25 provinces and capital.
+            </p>
+          </div>
+
+          <!-- Mobile Scenario Selector -->
+          <div class="flex items-center gap-1.5 rounded-xl border border-slate-700/80 bg-[#0a1226] p-1 text-xs md:hidden">
+            <button type="button" data-preset="conservative" class="preset-btn flex-1 rounded-lg px-2 py-1.5 font-medium transition" data-i18n="presetConservative">Conservative</button>
+            <button type="button" data-preset="baseline" class="preset-btn flex-1 rounded-lg px-2 py-1.5 font-medium transition" data-i18n="presetBaseline">Baseline</button>
+            <button type="button" data-preset="expansion" class="preset-btn flex-1 rounded-lg px-2 py-1.5 font-medium transition" data-i18n="presetExpansion">Expansion</button>
+          </div>
+
+          <div class="hidden rounded-xl border border-[#10b981]/25 bg-[#0a1226] px-4 py-2.5 font-mono text-xs lg:block">
+            <div class="text-slate-400" data-i18n="horizonStatusLabel">Target Horizon</div>
+            <div id="headerHorizonDisplay" class="mt-0.5 text-sm font-bold text-[#10b981]">2032 · 65% RELEASE</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 Live KPI Cards -->
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <!-- KPI 1: Total Fund Pool -->
+        <div class="holo-panel rounded-2xl p-4 sm:p-5">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-semibold uppercase tracking-wider text-[#00f0ff]" data-i18n="kpiTotalPool">
+              Total Fund Pool
+            </span>
+            <span class="rounded-md bg-[#00f0ff]/10 px-2 py-0.5 font-mono text-[11px] text-[#00f0ff]">USD</span>
+          </div>
+          <div id="kpiTotalPoolVal" class="mt-2.5 font-mono text-2xl font-bold text-white sm:text-3xl">$120.00M</div>
+          <p id="kpiTotalPoolSub" class="mt-1 font-mono text-xs text-slate-400">
+            Active Tranche Pool · 2026–2032
+          </p>
+        </div>
+
+        <!-- KPI 2: Allocated vs. Unallocated Capital -->
+        <div class="holo-panel rounded-2xl p-4 sm:p-5">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-semibold uppercase tracking-wider text-amber-300" data-i18n="kpiAllocatedCap">
+              Allocated Capital
+            </span>
+            <span id="kpiAllocPctBadge" class="rounded-md bg-amber-500/15 px-2 py-0.5 font-mono text-[11px] text-amber-300">100.0%</span>
+          </div>
+          <div id="kpiAllocatedVal" class="mt-2.5 font-mono text-2xl font-bold text-white sm:text-3xl">$120.00M</div>
+          <p id="kpiUnallocatedSub" class="mt-1 font-mono text-xs text-emerald-300">
+            Unallocated Buffer: $0.00M (0.0%)
+          </p>
+        </div>
+
+        <!-- KPI 3: Projected Liquidity Reserve -->
+        <div class="holo-panel-emerald rounded-2xl p-4 sm:p-5">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-semibold uppercase tracking-wider text-[#10b981]" data-i18n="kpiLiquidityRes">
+              Projected Liquidity Reserve
+            </span>
+            <span id="kpiHorizonBadge" class="rounded-md bg-[#10b981]/15 px-2 py-0.5 font-mono text-[11px] text-[#10b981]">2032</span>
+          </div>
+          <div id="kpiLiquidityVal" class="mt-2.5 font-mono text-2xl font-bold text-white sm:text-3xl">$68.40M</div>
+          <p id="kpiLiquiditySub" class="mt-1 font-mono text-xs text-cyan-300">
+            MSN Coin Backing + Reserve Growth
+          </p>
+        </div>
+
+        <!-- KPI 4: Estimated Community & UES Yield -->
+        <div class="holo-panel rounded-2xl p-4 sm:p-5">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-semibold uppercase tracking-wider text-violet-300" data-i18n="kpiCommunityYield">
+              Community &amp; UES Yield
+            </span>
+            <span class="rounded-md bg-violet-500/15 px-2 py-0.5 font-mono text-[11px] text-violet-200">ANNUALIZED</span>
+          </div>
+          <div id="kpiCommunityYieldVal" class="mt-2.5 font-mono text-2xl font-bold text-white sm:text-3xl">$14.85M</div>
+          <p id="kpiCommunityYieldSub" class="mt-1 font-mono text-xs text-emerald-300">
+            Distributed via UES &amp; HCV Grants
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Capital Allocation Controls + Dual Canvas Visualizers -->
+    <section class="grid grid-cols-1 gap-6 lg:grid-cols-12">
+      <!-- Left Parameter & Tranche Controls (5 cols) -->
+      <aside class="holo-panel space-y-4 rounded-2xl p-5 sm:p-6 lg:col-span-5">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+          <div>
+            <h2 class="text-base font-bold text-white sm:text-lg" data-i18n="simHeading">
+              Capital Allocation Simulator
+            </h2>
+            <p class="text-xs text-slate-400" data-i18n="simSubtitle">
+              Tune pool size, tranche weights, horizon, and release velocity.
+            </p>
+          </div>
+          <button
+            type="button"
+            id="normalizeWeightsBtn"
+            class="rounded-lg border border-[#00f0ff]/30 bg-[#00f0ff]/10 px-2.5 py-1 font-mono text-[11px] text-[#00f0ff] transition hover:bg-[#00f0ff]/20"
+            data-i18n="normalizeBtn"
+          >
+            Balance 100%
+          </button>
+        </div>
+
+        <!-- Total Ecosystem Fund Pool (USD) -->
+        <div class="space-y-1.5">
+          <div class="flex justify-between text-xs">
+            <label for="poolSizeSlider" class="font-medium text-slate-200" data-i18n="labelTotalPool">
+              Total Ecosystem Fund Pool (USD)
+            </label>
+            <span id="poolSizeVal" class="font-mono font-bold text-[#00f0ff]">$120.00M</span>
+          </div>
+          <input id="poolSizeSlider" type="range" min="10" max="500" step="5" class="w-full cursor-pointer" />
+        </div>
+
+        <!-- Tranche 1: Ecosystem Growth & Infrastructure -->
+        <div class="space-y-1.5">
+          <div class="flex justify-between text-xs">
+            <label for="trancheGrowthSlider" class="font-medium text-cyan-200" data-i18n="trancheGrowth">
+              Ecosystem Growth &amp; Infrastructure
+            </label>
+            <span id="trancheGrowthVal" class="font-mono font-bold text-[#00f0ff]">30%</span>
+          </div>
+          <input id="trancheGrowthSlider" type="range" min="5" max="70" step="1" class="w-full cursor-pointer" />
+        </div>
+
+        <!-- Tranche 2: Member UES & Community Grants -->
+        <div class="space-y-1.5">
+          <div class="flex justify-between text-xs">
+            <label for="trancheUesSlider" class="font-medium text-emerald-200" data-i18n="trancheUes">
+              Member UES &amp; Community Grants
+            </label>
+            <span id="trancheUesVal" class="font-mono font-bold text-[#10b981]">32%</span>
+          </div>
+          <input id="trancheUesSlider" type="range" min="5" max="70" step="1" class="w-full cursor-pointer" />
+        </div>
+
+        <!-- Tranche 3: Liquidity & MSN Coin Reserve -->
+        <div class="space-y-1.5">
+          <div class="flex justify-between text-xs">
+            <label for="trancheLiquiditySlider" class="font-medium text-amber-200" data-i18n="trancheLiquidity">
+              Liquidity &amp; MSN Coin Reserve
+            </label>
+            <span id="trancheLiquidityVal" class="font-mono font-bold text-amber-300">25%</span>
+          </div>
+          <input id="trancheLiquiditySlider" type="range" min="5" max="70" step="1" class="w-full cursor-pointer" />
+        </div>
+
+        <!-- Tranche 4: Governance & Security Reserve -->
+        <div class="space-y-1.5">
+          <div class="flex justify-between text-xs">
+            <label for="trancheGovSlider" class="font-medium text-violet-200" data-i18n="trancheGov">
+              Governance &amp; Security Reserve
+            </label>
+            <span id="trancheGovVal" class="font-mono font-bold text-violet-300">13%</span>
+          </div>
+          <input id="trancheGovSlider" type="range" min="2" max="40" step="1" class="w-full cursor-pointer" />
+        </div>
+
+        <!-- Target Horizon & Tranche Release Rate -->
+        <div class="grid grid-cols-1 gap-4 border-t border-slate-800 pt-3 sm:grid-cols-2">
+          <div class="space-y-1.5">
+            <div class="flex justify-between text-xs">
+              <label for="horizonYearSlider" class="font-medium text-slate-200" data-i18n="labelHorizon">
+                Target Horizon
+              </label>
+              <span id="horizonYearVal" class="font-mono font-bold text-[#00f0ff]">2032</span>
+            </div>
+            <input id="horizonYearSlider" type="range" min="2026" max="2032" step="1" class="w-full cursor-pointer" />
+          </div>
+
+          <div class="space-y-1.5">
+            <div class="flex justify-between text-xs">
+              <label for="releaseRateSlider" class="font-medium text-slate-200" data-i18n="labelReleaseRate">
+                Tranche Release Rate
+              </label>
+              <span id="releaseRateVal" class="font-mono font-bold text-[#10b981]">65%</span>
+            </div>
+            <input id="releaseRateSlider" type="range" min="15" max="100" step="5" class="w-full cursor-pointer" />
+          </div>
+        </div>
+      </aside>
+
+      <!-- Right Dual HTML5 Canvas Visualizers (7 cols) -->
+      <div class="space-y-6 lg:col-span-7">
+        <!-- Canvas 1: Capital Allocation & Tranche Distribution Chart -->
+        <div class="holo-panel rounded-2xl p-5">
+          <div class="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
+            <div>
+              <h2 class="text-sm font-bold text-white sm:text-base" data-i18n="canvas1Title">
+                1. Capital Allocation &amp; Tranche Distribution
+              </h2>
+              <p class="text-xs text-slate-400" data-i18n="canvas1Sub">
+                Hover or tap tranche bars to inspect USD allocation, share %, and UES/HCV yield contribution.
+              </p>
+            </div>
+            <span id="trancheSumPill" class="rounded-lg border border-[#10b981]/30 bg-[#10b981]/10 px-2.5 py-1 font-mono text-xs font-semibold text-[#10b981]">
+              TOTAL: 100%
+            </span>
+          </div>
+          <div class="rounded-xl border border-slate-800/90 bg-[#050914]/80 p-2">
+            <canvas id="trancheCanvas" class="h-[210px] w-full sm:h-[225px]"></canvas>
+          </div>
+        </div>
+
+        <!-- Canvas 2: Multi-Year Fund Deployment & Reserve Trajectory (2026–2032) -->
+        <div class="holo-panel rounded-2xl p-5">
+          <div class="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
+            <div>
+              <h2 class="text-sm font-bold text-white sm:text-base" data-i18n="canvas2Title">
+                2. Multi-Year Fund Deployment &amp; Reserve Trajectory (2026–2032)
+              </h2>
+              <p class="text-xs text-slate-400" data-i18n="canvas2Sub">
+                Hover or tap timeline points to inspect deployed capital vs. liquidity reserve across years.
+              </p>
+            </div>
+            <div class="flex items-center gap-3 font-mono text-[11px]">
+              <span class="flex items-center gap-1 text-[#00f0ff]">
+                <span class="h-2 w-2 rounded-full bg-[#00f0ff]"></span>
+                <span data-i18n="legendDeployed">Deployed</span>
+              </span>
+              <span class="flex items-center gap-1 text-[#10b981]">
+                <span class="h-2 w-2 rounded-full bg-[#10b981]"></span>
+                <span data-i18n="legendReserve">Reserve</span>
+              </span>
+            </div>
+          </div>
+          <div class="rounded-xl border border-slate-800/90 bg-[#050914]/80 p-2">
+            <canvas id="trajectoryCanvas" class="h-[220px] w-full sm:h-[240px]"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Floating Hover/Touch Canvas Tooltip -->
+    <div
+      id="canvasTooltip"
+      class="pointer-events-none fixed z-40 hidden rounded-xl border border-[#00f0ff]/45 bg-[#040814]/95 px-3 py-2 font-mono text-xs text-slate-100 shadow-2xl backdrop-blur-md"
+    ></div>
+
+    <!-- Provincial & Regional Fund Distribution Matrix (All 25 Cambodian Provinces/Capital) -->
+    <section class="holo-panel rounded-2xl p-5 sm:p-6">
+      <div class="flex flex-col justify-between gap-4 border-b border-slate-800 pb-4 md:flex-row md:items-center">
+        <div>
+          <h2 class="text-base font-bold text-white sm:text-lg" data-i18n="regionalHeading">
+            Provincial &amp; Regional Fund Distribution Matrix (25 Regions)
+          </h2>
+          <p class="text-xs text-slate-400 sm:text-sm" data-i18n="regionalSub">
+            Filter Cambodia's 25 provinces/capital by Khmer or English name, compute regional allocation weights, and inspect UES/HCV grant share.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2.5">
+          <input
+            type="search"
+            id="regionSearchInput"
+            placeholder="Search province / ខេត្ត..."
+            aria-label="Search Cambodia provinces"
+            class="w-48 rounded-xl border border-slate-700/80 bg-[#050914] px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:border-[#00f0ff] focus:outline-none sm:w-56"
+          />
+          <select
+            id="regionSelect"
+            aria-label="Select province"
+            class="rounded-xl border border-[#00f0ff]/30 bg-[#050914] px-3 py-1.5 text-xs font-medium text-[#00f0ff] focus:border-[#00f0ff] focus:outline-none"
+          >
+            <!-- Populated dynamically -->
+          </select>
+        </div>
+      </div>
+
+      <div class="mt-5 grid grid-cols-1 gap-6 lg:grid-cols-12">
+        <!-- Focused Province Card (4 cols) -->
+        <div class="holo-panel-emerald flex flex-col justify-between rounded-xl p-4 sm:p-5 lg:col-span-4" id="selectedRegionCard">
+          <!-- Populated dynamically -->
+        </div>
+
+        <!-- 25-Region Allocation Matrix Grid (8 cols) -->
+        <div class="lg:col-span-8">
+          <div id="regionMatrixGrid" class="grid max-h-[380px] grid-cols-1 gap-2.5 overflow-y-auto pr-1 sm:grid-cols-2 xl:grid-cols-3">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Ledger / Tranche Schedule Table -->
+    <section class="holo-panel rounded-2xl p-5 sm:p-6">
+      <div class="flex flex-col justify-between gap-4 border-b border-slate-800 pb-4 md:flex-row md:items-center">
+        <div>
+          <h2 class="text-base font-bold text-white sm:text-lg" data-i18n="scheduleHeading">
+            Interactive Tranche &amp; Deployment Schedule Ledger
+          </h2>
+          <p class="text-xs text-slate-400 sm:text-sm" data-i18n="scheduleSub">
+            Search or filter tranche milestones by category or disbursement status with live recalculation.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <input
+            type="search"
+            id="scheduleSearchInput"
+            placeholder="Search tranche / milestone..."
+            aria-label="Search tranche schedule"
+            class="w-44 rounded-xl border border-slate-700/80 bg-[#050914] px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:border-[#00f0ff] focus:outline-none sm:w-52"
+          />
+
+          <select
+            id="trancheCategoryFilter"
+            aria-label="Filter by tranche"
+            class="rounded-xl border border-slate-700/80 bg-[#050914] px-3 py-1.5 font-mono text-xs text-slate-200 focus:border-[#00f0ff] focus:outline-none"
+          >
+            <option value="ALL">ALL TRANCHES</option>
+            <option value="GROWTH">GROWTH &amp; INFRA</option>
+            <option value="UES">UES &amp; GRANTS</option>
+            <option value="LIQUIDITY">LIQUIDITY RESERVE</option>
+            <option value="GOVERNANCE">GOVERNANCE &amp; SEC</option>
+          </select>
+
+          <select
+            id="trancheStatusFilter"
+            aria-label="Filter by status"
+            class="rounded-xl border border-slate-700/80 bg-[#050914] px-3 py-1.5 font-mono text-xs text-slate-200 focus:border-[#00f0ff] focus:outline-none"
+          >
+            <option value="ALL">ALL STATUS</option>
+            <option value="ACTIVE">ACTIVE</option>
+            <option value="SCHEDULED">SCHEDULED</option>
+            <option value="LOCKED">LOCKED</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mt-4 overflow-x-auto">
+        <table class="w-full min-w-[720px] border-collapse text-left text-xs sm:text-sm">
+          <thead>
+            <tr class="border-b border-slate-800 font-mono text-[11px] uppercase tracking-wider text-slate-400">
+              <th class="px-3 py-2.5" data-i18n="colTranche">Tranche &amp; Milestone</th>
+              <th class="px-3 py-2.5" data-i18n="colWindow">Window</th>
+              <th class="px-3 py-2.5" data-i18n="colShare">Pool Share</th>
+              <th class="px-3 py-2.5" data-i18n="colAllocated">Allocated (USD)</th>
+              <th class="px-3 py-2.5" data-i18n="colReleased">Released @ Horizon</th>
+              <th class="px-3 py-2.5 text-right" data-i18n="colStatus">Status</th>
+            </tr>
+          </thead>
+          <tbody id="scheduleTableBody" class="divide-y divide-slate-800/70 font-mono text-xs sm:text-[13px]">
+            <!-- Populated dynamically -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      'use strict';
+
+      const STORAGE_KEY = 'msn_fund_model_state_v1';
+      const YEARS = [2026, 2027, 2028, 2029, 2030, 2031, 2032];
+
+      // All 25 Cambodian Provinces & Capital with Khmer & English names + regional weights
+      const CAMBODIA_25_PROVINCES = [
+        { id: 'phnom-penh', km: 'រាជធានីភ្នំពេញ', en: 'Phnom Penh', weight: 0.19, communes: 105 },
+        { id: 'siem-reap', km: 'ខេត្តសៀមរាប', en: 'Siem Reap', weight: 0.085, communes: 100 },
+        { id: 'battambang', km: 'ខេត្តបាត់ដំបង', en: 'Battambang', weight: 0.082, communes: 103 },
+        { id: 'kandal', km: 'ខេត្តកណ្ដាល', en: 'Kandal', weight: 0.088, communes: 127 },
+        { id: 'kampong-cham', km: 'ខេត្តកំពង់ចាម', en: 'Kampong Cham', weight: 0.068, communes: 109 },
+        { id: 'prey-veng', km: 'ខេត្តព្រៃវែង', en: 'Prey Veng', weight: 0.062, communes: 116 },
+        { id: 'takeo', km: 'ខេត្តតាកែវ', en: 'Takeo', weight: 0.058, communes: 100 },
+        { id: 'kampong-speu', km: 'ខេត្តកំពង់ស្ពឺ', en: 'Kampong Speu', weight: 0.054, communes: 87 },
+        { id: 'banteay-meanchey', km: 'ខេត្តបន្ទាយមានជ័យ', en: 'Banteay Meanchey', weight: 0.052, communes: 65 },
+        { id: 'tboung-khmum', km: 'ខេត្តត្បូងឃ្មុំ', en: 'Tboung Khmum', weight: 0.048, communes: 64 },
+        { id: 'kampong-thom', km: 'ខេត្តកំពង់ធំ', en: 'Kampong Thom', weight: 0.036, communes: 81 },
+        { id: 'kampot', km: 'ខេត្តកំពត', en: 'Kampot', weight: 0.034, communes: 93 },
+        { id: 'kampong-chhnang', km: 'ខេត្តកំពង់ឆ្នាំង', en: 'Kampong Chhnang', weight: 0.028, communes: 70 },
+        { id: 'pursat', km: 'ខេត្តពោធិ៍សាត់', en: 'Pursat', weight: 0.024, communes: 49 },
+        { id: 'preah-sihanouk', km: 'ខេត្តព្រះសីហនុ', en: 'Preah Sihanouk', weight: 0.024, communes: 29 },
+        { id: 'svay-rieng', km: 'ខេត្តស្វាយរៀង', en: 'Svay Rieng', weight: 0.022, communes: 80 },
+        { id: 'kratie', km: 'ខេត្តក្រចេះ', en: 'Kratie', weight: 0.017, communes: 47 },
+        { id: 'preah-vihear', km: 'ខេត្តព្រះវិហារ', en: 'Preah Vihear', weight: 0.012, communes: 51 },
+        { id: 'oddar-meanchey', km: 'ខេត្តឧត្តរមានជ័យ', en: 'Oddar Meanchey', weight: 0.011, communes: 24 },
+        { id: 'koh-kong', km: 'ខេត្តកោះកុង', en: 'Koh Kong', weight: 0.009, communes: 29 },
+        { id: 'stung-treng', km: 'ខេត្តស្ទឹងត្រែង', en: 'Stung Treng', weight: 0.008, communes: 34 },
+        { id: 'ratanakiri', km: 'ខេត្តរតនគិរី', en: 'Ratanakiri', weight: 0.008, communes: 50 },
+        { id: 'mondulkiri', km: 'ខេត្តមណ្ឌលគិរី', en: 'Mondulkiri', weight: 0.006, communes: 21 },
+        { id: 'pailin', km: 'ខេត្តប៉ៃលិន', en: 'Pailin', weight: 0.005, communes: 8 },
+        { id: 'kep', km: 'ខេត្តកែប', en: 'Kep', weight: 0.004, communes: 5 },
+      ];
+
+      const PRESETS = {
+        conservative: {
+          poolMillions: 60,
+          growthPct: 26,
+          uesPct: 34,
+          liquidityPct: 28,
+          govPct: 12,
+          horizonYear: 2032,
+          releaseRatePct: 45,
+        },
+        baseline: {
+          poolMillions: 120,
+          growthPct: 30,
+          uesPct: 32,
+          liquidityPct: 25,
+          govPct: 13,
+          horizonYear: 2032,
+          releaseRatePct: 65,
+        },
+        expansion: {
+          poolMillions: 260,
+          growthPct: 34,
+          uesPct: 36,
+          liquidityPct: 20,
+          govPct: 10,
+          horizonYear: 2032,
+          releaseRatePct: 85,
+        },
+      };
+
+      const TRANSLATIONS = {
+        en: {
+          brandTitle: 'Mohaserei System Network (MSN)',
+          brandSubtitle: 'Capital Allocation, UES/HCV Community Yield & 25-Region Treasury Model',
+          presetConservative: 'Conservative',
+          presetBaseline: 'Baseline',
+          presetExpansion: 'Expansion',
+          voiceBriefBtn: 'Voice Brief',
+          exportBtn: 'Export JSON',
+          resetBtn: 'Reset',
+          heroBadge: 'MOHASEREI SYSTEM NETWORK (MSN) · FUND ARCHITECTURE 2026–2032',
+          heroTitle: 'Mohaserei Ecosystem Fund Model',
+          heroDesc:
+            "Model capital tranches across Ecosystem Growth & Infrastructure, Member UES & Community Grants, Liquidity & MSN Coin Reserve, and Governance & Security Reserve across Cambodia's 25 provinces and capital.",
+          horizonStatusLabel: 'Target Horizon',
+          kpiTotalPool: 'Total Fund Pool',
+          kpiAllocatedCap: 'Allocated Capital',
+          kpiLiquidityRes: 'Projected Liquidity Reserve',
+          kpiCommunityYield: 'Community & UES Yield',
+          simHeading: 'Capital Allocation Simulator',
+          simSubtitle: 'Tune pool size, tranche weights, horizon, and release velocity.',
+          normalizeBtn: 'Balance 100%',
+          labelTotalPool: 'Total Ecosystem Fund Pool (USD)',
+          trancheGrowth: 'Ecosystem Growth & Infrastructure',
+          trancheUes: 'Member UES & Community Grants',
+          trancheLiquidity: 'Liquidity & MSN Coin Reserve',
+          trancheGov: 'Governance & Security Reserve',
+          labelHorizon: 'Target Horizon',
+          labelReleaseRate: 'Tranche Release Rate',
+          canvas1Title: '1. Capital Allocation & Tranche Distribution',
+          canvas1Sub: 'Hover or tap tranche bars to inspect USD allocation, share %, and UES/HCV yield contribution.',
+          canvas2Title: '2. Multi-Year Fund Deployment & Reserve Trajectory (2026–2032)',
+          canvas2Sub: 'Hover or tap timeline points to inspect deployed capital vs. liquidity reserve across years.',
+          legendDeployed: 'Deployed',
+          legendReserve: 'Reserve',
+          regionalHeading: 'Provincial & Regional Fund Distribution Matrix (25 Regions)',
+          regionalSub:
+            "Filter Cambodia's 25 provinces/capital by Khmer or English name, compute regional allocation weights, and inspect UES/HCV grant share.",
+          scheduleHeading: 'Interactive Tranche & Deployment Schedule Ledger',
+          scheduleSub: 'Search or filter tranche milestones by category or disbursement status with live recalculation.',
+          colTranche: 'Tranche & Milestone',
+          colWindow: 'Window',
+          colShare: 'Pool Share',
+          colAllocated: 'Allocated (USD)',
+          colReleased: 'Released @ Horizon',
+          colStatus: 'Status',
+        },
+        km: {
+          brandTitle: 'បណ្តាញប្រព័ន្ធមហាសេរី (MSN)',
+          brandSubtitle: 'គំរូបែងចែកមូលនិធិ ផលប្រយោជន៍ UES/HCV និងឃ្លាំង២៥រាជធានី-ខេត្ត',
+          presetConservative: 'ប្រុងប្រយ័ត្ន',
+          presetBaseline: 'មូលដ្ឋាន',
+          presetExpansion: 'ពង្រីកធំ',
+          voiceBriefBtn: 'សំឡេងសង្ខេប',
+          exportBtn: 'នាំចេញ JSON',
+          resetBtn: 'កំណត់ថ្មី',
+          heroBadge: 'បណ្តាញប្រព័ន្ធមហាសេរី (MSN) · ស្ថាបត្យកម្មមូលនិធិ ២០២៦–២០៣២',
+          heroTitle: 'គំរូមូលនិធិប្រព័ន្ធអេកូឡូស៊ីមហាសេរី',
+          heroDesc:
+            'គណនាកញ្ចប់មូលនិធិសម្រាប់កំណើន និងហេដ្ឋារចនាសម្ព័ន្ធ ជំនួយសហគមន៍ និង UES ទុនបម្រុង MSN Coin និងសន្តិសុខអភិបាលកិច្ច នៅ២៥រាជធានី-ខេត្តកម្ពុជា។',
+          horizonStatusLabel: 'ឆ្នាំគោលដៅ',
+          kpiTotalPool: 'មូលនិធិសរុប',
+          kpiAllocatedCap: 'មូលធនបានបែងចែក',
+          kpiLiquidityRes: 'ទុនបម្រុងសាច់ប្រាក់ព្យាករ',
+          kpiCommunityYield: 'ផលប្រយោជន៍សហគមន៍ & UES',
+          simHeading: 'ឧបករណ៍ក្លែងធ្វើការបែងចែកមូលនិធិ',
+          simSubtitle: 'កែសម្រួលទំហំមូលនិធិ ភាគរយកញ្ចប់ ឆ្នាំគោលដៅ និងអត្រាបញ្ចេញ។',
+          normalizeBtn: 'តុល្យភាព 100%',
+          labelTotalPool: 'មូលនិធិប្រព័ន្ធអេកូឡូស៊ីសរុប (USD)',
+          trancheGrowth: 'កំណើនប្រព័ន្ធ និងហេដ្ឋារចនាសម្ព័ន្ធ',
+          trancheUes: 'ជំនួយសមាជិក UES និងសហគមន៍',
+          trancheLiquidity: 'ទុនបម្រុងសាច់ប្រាក់ និង MSN Coin',
+          trancheGov: 'ទុនបម្រុងអភិបាលកិច្ច និងសន្តិសុខ',
+          labelHorizon: 'ឆ្នាំគោលដៅ',
+          labelReleaseRate: 'អត្រាបញ្ចេញកញ្ចប់',
+          canvas1Title: '១. ការបែងចែកមូលធន និងសមាមាត្រកញ្ចប់',
+          canvas1Sub: 'ដាក់កស្ស័រ ឬចុចលើរបារដើម្បីមើលទំហំ USD ភាគរយ និងផល UES/HCV។',
+          canvas2Title: '២. គន្លងការដាក់ពង្រាយមូលនិធិ និងទុនបម្រុង (២០២៦–២០៣២)',
+          canvas2Sub: 'ដាក់កស្ស័រ ឬចុចលើចំណុចឆ្នាំដើម្បីប្រៀបធៀបមូលធនបានប្រើ និងទុនបម្រុង។',
+          legendDeployed: 'បានដាក់ពង្រាយ',
+          legendReserve: 'ទុនបម្រុង',
+          regionalHeading: 'តារាងបែងចែកមូលនិធិតាមរាជធានី-ខេត្តទាំង២៥',
+          regionalSub:
+            'ស្វែងរករាជធានី-ខេត្តជាភាសាខ្មែរ ឬអង់គ្លេស គណនាទម្ងន់បែងចែក និងពិនិត្យចំណែកជំនួយ UES/HCV។',
+          scheduleHeading: 'បញ្ជីកាលវិភាគបញ្ចេញកញ្ចប់មូលនិធិ',
+          scheduleSub: 'ស្វែងរក ឬត្រងដំណាក់កាលមូលនិធិតាមប្រភេទ ឬស្ថានភាព ដោយគណនាស្វ័យប្រវត្តិ។',
+          colTranche: 'កញ្ចប់ និងដំណាក់កាល',
+          colWindow: 'កំឡុងពេល',
+          colShare: 'ចំណែកមូលនិធិ',
+          colAllocated: 'បានបែងចែក (USD)',
+          colReleased: 'បញ្ចេញតាមឆ្នាំគោលដៅ',
+          colStatus: 'ស្ថានភាព',
+        },
+      };
+
+      const DEFAULT_STATE = {
+        lang: 'en',
+        preset: 'baseline',
+        selectedRegionId: 'phnom-penh',
+        params: { ...PRESETS.baseline },
+      };
+
+      function loadState() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return structuredClone(DEFAULT_STATE);
+          const parsed = JSON.parse(raw);
+          return {
+            ...structuredClone(DEFAULT_STATE),
+            ...parsed,
+            params: {
+              ...structuredClone(PRESETS.baseline),
+              ...(parsed.params || {}),
+            },
+          };
+        } catch (err) {
+          console.warn('Mohaserei fund model state fallback:', err);
+          return structuredClone(DEFAULT_STATE);
+        }
+      }
+
+      let state = loadState();
+
+      function saveState() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch (err) {
+          console.warn('Mohaserei fund model save warning:', err);
+        }
+      }
+
+      function showToast(message, tone = 'cyan') {
+        const host = document.getElementById('toastHost');
+        if (!host) return;
+        const item = document.createElement('div');
+        const cls =
+          tone === 'emerald'
+            ? 'border-[#10b981]/45 bg-[#0a1f26]/95 text-emerald-200'
+            : tone === 'amber'
+            ? 'border-amber-400/45 bg-[#1a1408]/95 text-amber-200'
+            : 'border-[#00f0ff]/45 bg-[#0a1226]/95 text-[#00f0ff]';
+        item.className = `pointer-events-auto rounded-xl border px-4 py-3 text-xs font-medium shadow-2xl backdrop-blur-md transition duration-300 ${cls}`;
+        item.textContent = message;
+        host.appendChild(item);
+        setTimeout(() => {
+          item.style.opacity = '0';
+          setTimeout(() => item.remove(), 250);
+        }, 3000);
+      }
+
+      function formatUsdCompact(usd) {
+        const abs = Math.abs(usd);
+        const sign = usd < 0 ? '-' : '';
+        if (abs >= 1e9) return `${sign}$${(abs / 1e9).toFixed(2)}B`;
+        if (abs >= 1e6) return `${sign}$${(abs / 1e6).toFixed(2)}M`;
+        if (abs >= 1e3) return `${sign}$${(abs / 1e3).toFixed(1)}K`;
+        return `${sign}$${abs.toFixed(0)}`;
+      }
+
+      function formatInt(n) {
+        return Math.round(n || 0).toLocaleString('en-US');
+      }
+
+      function computeFundModel() {
+        const p = state.params;
+        const totalPoolUsd = p.poolMillions * 1e6;
+        const sumPct = p.growthPct + p.uesPct + p.liquidityPct + p.govPct;
+        const allocatedUsd = totalPoolUsd * (Math.min(100, sumPct) / 100);
+        const unallocatedUsd = Math.max(0, totalPoolUsd - allocatedUsd);
+
+        const tranches = [
+          {
+            key: 'GROWTH',
+            labelEn: 'Growth & Infra',
+            labelKm: 'កំណើន & ហេដ្ឋារចនាសម្ព័ន្ធ',
+            pct: p.growthPct,
+            amountUsd: totalPoolUsd * (p.growthPct / 100),
+            color: '#00f0ff',
+            window: '2026–2030',
+            status: 'ACTIVE',
+            milestoneEn: 'Regional Nodes, Layer 2 Settlement & Merchant SDK',
+            milestoneKm: 'ហេដ្ឋារចនាសម្ព័ន្ធតំបន់ និងប្រព័ន្ធទូទាត់ Layer 2',
+          },
+          {
+            key: 'UES',
+            labelEn: 'UES & Grants',
+            labelKm: 'UES & ជំនួយសហគមន៍',
+            pct: p.uesPct,
+            amountUsd: totalPoolUsd * (p.uesPct / 100),
+            color: '#10b981',
+            window: '2026–2032',
+            status: 'ACTIVE',
+            milestoneEn: 'Verified HCV Civic Rewards & Commune Co-op Grants',
+            milestoneKm: 'រង្វាន់ HCV ពលរដ្ឋ និងជំនួយសហគមន៍ឃុំ/សង្កាត់',
+          },
+          {
+            key: 'LIQUIDITY',
+            labelEn: 'MSN Liquidity',
+            labelKm: 'សាច់ប្រាក់ MSN Coin',
+            pct: p.liquidityPct,
+            amountUsd: totalPoolUsd * (p.liquidityPct / 100),
+            color: '#f59e0b',
+            window: '2026–2032',
+            status: 'SCHEDULED',
+            milestoneEn: 'MSN Coin Market Depth & Cross-Province Settlement Pool',
+            milestoneKm: 'ទុនបម្រុង MSN Coin និងសាច់ប្រាក់ទូទាត់អន្តរខេត្ត',
+          },
+          {
+            key: 'GOVERNANCE',
+            labelEn: 'Governance & Sec',
+            labelKm: 'អភិបាលកិច្ច & សន្តិសុខ',
+            pct: p.govPct,
+            amountUsd: totalPoolUsd * (p.govPct / 100),
+            color: '#a78bfa',
+            window: '2027–2032',
+            status: 'LOCKED',
+            milestoneEn: 'Multi-Sig Charter Audits, Timelock & Risk Buffer',
+            milestoneKm: 'សវនកម្មធម្មនុញ្ញ សុវត្ថិភាព និងទុនបម្រុងហានិភ័យ',
+          },
+        ];
+
+        const horizonIdx = Math.max(0, YEARS.indexOf(p.horizonYear));
+        const horizonFraction = ((horizonIdx + 1) / YEARS.length) * (p.releaseRatePct / 100);
+
+        const projectedLiquidityReserve =
+          tranches[2].amountUsd * (0.65 + horizonFraction * 0.75) + unallocatedUsd * 0.4;
+
+        const estimatedCommunityYield =
+          tranches[1].amountUsd * (0.09 + (p.releaseRatePct / 100) * 0.08) +
+          tranches[0].amountUsd * 0.03;
+
+        const trajectory = YEARS.map((yr, idx) => {
+          const stepRatio = (idx + 1) / YEARS.length;
+          const deployed = allocatedUsd * Math.min(1, stepRatio * (p.releaseRatePct / 65));
+          const reserve =
+            tranches[2].amountUsd * (0.55 + stepRatio * 0.65) +
+            tranches[3].amountUsd * (0.7 + stepRatio * 0.25) +
+            unallocatedUsd;
+          return {
+            year: yr,
+            deployed,
+            reserve,
+          };
+        });
+
+        const activeHorizonRow = trajectory[horizonIdx] || trajectory[trajectory.length - 1];
+
+        const regions = CAMBODIA_25_PROVINCES.map((r) => {
+          const grantAllocationUsd = tranches[1].amountUsd * r.weight * (p.releaseRatePct / 100);
+          const growthAllocationUsd = tranches[0].amountUsd * r.weight * (p.releaseRatePct / 100);
+          return {
+            ...r,
+            sharePct: r.weight * 100,
+            totalRegionalUsd: grantAllocationUsd + growthAllocationUsd,
+            grantAllocationUsd,
+          };
+        });
+
+        return {
+          totalPoolUsd,
+          sumPct,
+          allocatedUsd,
+          unallocatedUsd,
+          tranches,
+          horizonFraction,
+          projectedLiquidityReserve,
+          estimatedCommunityYield,
+          trajectory,
+          activeHorizonRow,
+          regions,
+        };
+      }
+
+      function applyTranslations() {
+        const dict = TRANSLATIONS[state.lang] || TRANSLATIONS.en;
+        document.documentElement.lang = state.lang === 'km' ? 'km' : 'en';
+
+        document.querySelectorAll('[data-i18n]').forEach((el) => {
+          const key = el.getAttribute('data-i18n');
+          if (dict[key]) el.textContent = dict[key];
+        });
+
+        document.querySelectorAll('.lang-btn').forEach((btn) => {
+          const active = btn.getAttribute('data-lang') === state.lang;
+          btn.className = `lang-btn rounded-lg px-2.5 py-1 font-medium transition focus:outline-none focus:ring-2 focus:ring-[#00f0ff] ${
+            active
+              ? 'border border-[#00f0ff]/45 bg-[#00f0ff]/20 text-[#00f0ff]'
+              : 'border border-transparent text-slate-400 hover:text-white'
+          }`;
+        });
+
+        document.querySelectorAll('.preset-btn').forEach((btn) => {
+          const active = btn.getAttribute('data-preset') === state.preset;
+          btn.className = `preset-btn rounded-lg px-2.5 py-1 font-medium transition focus:outline-none focus:ring-2 focus:ring-[#00f0ff] ${
+            active
+              ? 'border border-[#10b981]/45 bg-[#10b981]/20 text-[#10b981]'
+              : 'border border-transparent text-slate-400 hover:text-white'
+          }`;
+        });
+      }
+
+      function syncSliders() {
+        const p = state.params;
+        document.getElementById('poolSizeSlider').value = p.poolMillions;
+        document.getElementById('poolSizeVal').textContent = `$${p.poolMillions.toFixed(2)}M`;
+
+        document.getElementById('trancheGrowthSlider').value = p.growthPct;
+        document.getElementById('trancheGrowthVal').textContent = `${p.growthPct}%`;
+
+        document.getElementById('trancheUesSlider').value = p.uesPct;
+        document.getElementById('trancheUesVal').textContent = `${p.uesPct}%`;
+
+        document.getElementById('trancheLiquiditySlider').value = p.liquidityPct;
+        document.getElementById('trancheLiquidityVal').textContent = `${p.liquidityPct}%`;
+
+        document.getElementById('trancheGovSlider').value = p.govPct;
+        document.getElementById('trancheGovVal').textContent = `${p.govPct}%`;
+
+        document.getElementById('horizonYearSlider').value = p.horizonYear;
+        document.getElementById('horizonYearVal').textContent = String(p.horizonYear);
+
+        document.getElementById('releaseRateSlider').value = p.releaseRatePct;
+        document.getElementById('releaseRateVal').textContent = `${p.releaseRatePct}%`;
+      }
+
+      // Canvas Hit Targets for Hover / Touch Inspection
+      let trancheHitBoxes = [];
+      let trajectoryHitPoints = [];
+
+      function renderAll(model) {
+        const p = state.params;
+
+        document.getElementById('headerHorizonDisplay').textContent =
+          `${p.horizonYear} · ${p.releaseRatePct}% RELEASE`;
+
+        // KPIs
+        document.getElementById('kpiTotalPoolVal').textContent = formatUsdCompact(model.totalPoolUsd);
+        document.getElementById('kpiTotalPoolSub').textContent =
+          state.lang === 'km'
+            ? `កញ្ចប់មូលនិធិសកម្ម · ២០២៦–២០៣២`
+            : `Active Tranche Pool · 2026–2032`;
+
+        const allocPctDisplay = Math.min(100, model.sumPct);
+        const unallocPctDisplay = Math.max(0, 100 - model.sumPct);
+        document.getElementById('kpiAllocPctBadge').textContent = `${allocPctDisplay.toFixed(1)}%`;
+        document.getElementById('kpiAllocatedVal').textContent = formatUsdCompact(model.allocatedUsd);
+        document.getElementById('kpiUnallocatedSub').textContent =
+          state.lang === 'km'
+            ? `នៅសល់មិនទាន់បែងចែក៖ ${formatUsdCompact(model.unallocatedUsd)} (${unallocPctDisplay.toFixed(1)}%)`
+            : `Unallocated Buffer: ${formatUsdCompact(model.unallocatedUsd)} (${unallocPctDisplay.toFixed(1)}%)`;
+
+        document.getElementById('kpiHorizonBadge').textContent = String(p.horizonYear);
+        document.getElementById('kpiLiquidityVal').textContent = formatUsdCompact(model.projectedLiquidityReserve);
+        document.getElementById('kpiLiquiditySub').textContent =
+          state.lang === 'km'
+            ? `ទុនបម្រុង MSN Coin និងកំណើនបម្រុង`
+            : `MSN Coin Backing + Reserve Growth`;
+
+        document.getElementById('kpiCommunityYieldVal').textContent = formatUsdCompact(model.estimatedCommunityYield);
+        document.getElementById('kpiCommunityYieldSub').textContent =
+          state.lang === 'km'
+            ? `បែងចែកតាម UES និងជំនួយ HCV`
+            : `Distributed via UES & HCV Grants`;
+
+        const sumPill = document.getElementById('trancheSumPill');
+        sumPill.textContent = `TOTAL: ${model.sumPct}%`;
+        sumPill.className =
+          model.sumPct > 100
+            ? 'rounded-lg border border-amber-400/40 bg-amber-500/15 px-2.5 py-1 font-mono text-xs font-semibold text-amber-300'
+            : 'rounded-lg border border-[#10b981]/30 bg-[#10b981]/10 px-2.5 py-1 font-mono text-xs font-semibold text-[#10b981]';
+
+        drawTrancheCanvas(model);
+        drawTrajectoryCanvas(model);
+        renderRegionsMatrix(model.regions);
+        renderScheduleTable(model);
+      }
+
+      function drawTrancheCanvas(model) {
+        const canvas = document.getElementById('trancheCanvas');
+        if (!canvas) return;
+        const rect = canvas.getBoundingClientRect();
+        const dpr = window.devicePixelRatio || 1;
+        const width = Math.max(280, rect.width);
+        const height = Math.max(190, rect.height);
+
+        canvas.width = Math.round(width * dpr);
+        canvas.height = Math.round(height * dpr);
+
+        const ctx = canvas.getContext('2d');
+        ctx.scale(dpr, dpr);
+        ctx.clearRect(0, 0, width, height);
+
+        const padLeft = 56;
+        const padRight = 18;
+        const padTop = 18;
+        const padBottom = 38;
+        const plotW = Math.max(80, width - padLeft - padRight);
+        const plotH = Math.max(80, height - padTop - padBottom);
+
+        const maxAmt = Math.max(...model.tranches.map((t) => t.amountUsd), 1) * 1.15;
+
+        ctx.font = '10.5px "JetBrains Mono", monospace';
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+        for (let i = 0; i <= 3; i++) {
+          const ratio = i / 3;
+          const y = padTop + plotH - ratio * plotH;
+          const val = ratio * maxAmt;
+
+          ctx.strokeStyle = 'rgba(148, 163, 184, 0.14)';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(padLeft, y);
+          ctx.lineTo(padLeft + plotW, y);
+          ctx.stroke();
+
+          ctx.fillStyle = '#94a3b8';
+          ctx.fillText(formatUsdCompact(val), padLeft - 8, y);
+        }
+
+        const count = model.tranches.length;
+        const slotW = plotW / count;
+        const barW = Math.min(64, Math.max(24, slotW * 0.52));
+        trancheHitBoxes = [];
+
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+
+        model.tranches.forEach((tr, idx) => {
+          const cx = padLeft + idx * slotW + slotW / 2;
+          const barH = Math.max(6, (tr.amountUsd / maxAmt) * plotH);
+          const x = cx - barW / 2;
+          const y = padTop + plotH - barH;
+
+          ctx.fillStyle = tr.color;
+          ctx.globalAlpha = 0.85;
+          ctx.beginPath();
+          ctx.roundRect(x, y, barW, barH, [6, 6, 0, 0]);
+          ctx.fill();
+          ctx.globalAlpha = 1;
+
+          // Percentage label above bar
+          ctx.fillStyle = '#e2e8f0';
+          ctx.font = 'bold 10.5px "JetBrains Mono", monospace';
+          ctx.textBaseline = 'bottom';
+          ctx.fillText(`${tr.pct}%`, cx, y - 3);
+
+          // X label
+          ctx.fillStyle = '#94a3b8';
+          ctx.font = '10.5px "Kantumruy Pro", Inter, sans-serif';
+          ctx.textBaseline = 'top';
+          const shortLabel = state.lang === 'km' ? tr.labelKm.split('&')[0].trim() : tr.labelEn;
+          ctx.fillText(shortLabel, cx, padTop + plotH + 8);
+
+          trancheHitBoxes.push({
+            x,
+            y,
+            w: barW,
+            h: barH,
+            tranche: tr,
+          });
+        });
+      }
+
+      function drawTrajectoryCanvas(model) {
+        const canvas = document.getElementById('trajectoryCanvas');
+        if (!canvas) return;
+        const rect = canvas.getBoundingClientRect();
+        const dpr = window.devicePixelRatio || 1;
+        const width = Math.max(280, rect.width);
+        const height = Math.max(200, rect.height);
+
+        canvas.width = Math.round(width * dpr);
+        canvas.height = Math.round(height * dpr);
+
+        const ctx = canvas.getContext('2d');
+        ctx.scale(dpr, dpr);
+        ctx.clearRect(0, 0, width, height);
+
+        const padLeft = 58;
+        const padRight = 20;
+        const padTop = 18;
+        const padBottom = 34;
+        const plotW = Math.max(80, width - padLeft - padRight);
+        const plotH = Math.max(80, height - padTop - padBottom);
+
+        const series = model.trajectory;
+        const maxVal =
+          Math.max(...series.map((d) => Math.max(d.deployed, d.reserve)), 1) * 1.12;
+
+        ctx.font = '10.5px "JetBrains Mono", monospace';
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+        for (let i = 0; i <= 3; i++) {
+          const ratio = i / 3;
+          const y = padTop + plotH - ratio * plotH;
+          const val = ratio * maxVal;
+
+          ctx.strokeStyle = 'rgba(148, 163, 184, 0.14)';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(padLeft, y);
+          ctx.lineTo(padLeft + plotW, y);
+          ctx.stroke();
+
+          ctx.fillStyle = '#94a3b8';
+          ctx.fillText(formatUsdCompact(val), padLeft - 8, y);
+        }
+
+        const stepX = series.length > 1 ? plotW / (series.length - 1) : plotW;
+        function toXY(idx, val) {
+          return {
+            x: padLeft + idx * stepX,
+            y: padTop + plotH - (val / maxVal) * plotH,
+          };
+        }
+
+        // Reserve line (emerald)
+        ctx.save();
+        ctx.strokeStyle = '#10b981';
+        ctx.lineWidth = 2.2;
+        ctx.setLineDash([5, 4]);
+        ctx.beginPath();
+        series.forEach((pt, idx) => {
+          const xy = toXY(idx, pt.reserve);
+          if (idx === 0) ctx.moveTo(xy.x, xy.y);
+          else ctx.lineTo(xy.x, xy.y);
+        });
+        ctx.stroke();
+        ctx.restore();
+
+        // Deployed line + fill (cyan)
+        const grad = ctx.createLinearGradient(0, padTop, 0, padTop + plotH);
+        grad.addColorStop(0, 'rgba(0, 240, 255, 0.25)');
+        grad.addColorStop(1, 'rgba(0, 240, 255, 0.01)');
+
+        ctx.save();
+        ctx.beginPath();
+        series.forEach((pt, idx) => {
+          const xy = toXY(idx, pt.deployed);
+          if (idx === 0) ctx.moveTo(xy.x, xy.y);
+          else ctx.lineTo(xy.x, xy.y);
+        });
+        ctx.lineTo(padLeft + (series.length - 1) * stepX, padTop + plotH);
+        ctx.lineTo(padLeft, padTop + plotH);
+        ctx.closePath();
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        ctx.strokeStyle = '#00f0ff';
+        ctx.lineWidth = 2.6;
+        ctx.beginPath();
+        series.forEach((pt, idx) => {
+          const xy = toXY(idx, pt.deployed);
+          if (idx === 0) ctx.moveTo(xy.x, xy.y);
+          else ctx.lineTo(xy.x, xy.y);
+        });
+        ctx.stroke();
+        ctx.restore();
+
+        trajectoryHitPoints = [];
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+
+        series.forEach((pt, idx) => {
+          const xy = toXY(idx, pt.deployed);
+          const isHorizon = pt.year === state.params.horizonYear;
+
+          ctx.fillStyle = isHorizon ? '#10b981' : '#00f0ff';
+          ctx.beginPath();
+          ctx.arc(xy.x, xy.y, isHorizon ? 5.5 : 4, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = isHorizon ? '#00f0ff' : '#94a3b8';
+          ctx.font = isHorizon ? 'bold 11px "JetBrains Mono", monospace' : '10.5px "JetBrains Mono", monospace';
+          ctx.fillText(String(pt.year), xy.x, padTop + plotH + 8);
+
+          trajectoryHitPoints.push({
+            x: xy.x,
+            y: xy.y,
+            data: pt,
+          });
+        });
+      }
+
+      function renderRegionsMatrix(regions) {
+        const search = (document.getElementById('regionSearchInput').value || '').trim().toLowerCase();
+        const select = document.getElementById('regionSelect');
+        const grid = document.getElementById('regionMatrixGrid');
+        const card = document.getElementById('selectedRegionCard');
+
+        // Keep select populated with all 25
+        select.innerHTML = '';
+        regions.forEach((r) => {
+          const opt = document.createElement('option');
+          opt.value = r.id;
+          opt.textContent = `${r.km} (${r.en})`;
+          opt.selected = r.id === state.selectedRegionId;
+          select.appendChild(opt);
+        });
+
+        const focused = regions.find((r) => r.id === state.selectedRegionId) || regions[0];
+        state.selectedRegionId = focused.id;
+
+        card.innerHTML = `
+          <div class="space-y-3">
+            <div class="flex items-start justify-between gap-2">
+              <div>
+                <span class="font-mono text-[10px] uppercase tracking-wider text-[#10b981]">SELECTED REGION · ${state.params.horizonYear}</span>
+                <h3 class="mt-0.5 text-lg font-bold text-white">${focused.km}</h3>
+                <p class="text-xs text-slate-300">${focused.en}</p>
+              </div>
+              <span class="rounded-lg border border-[#00f0ff]/35 bg-[#00f0ff]/15 px-2.5 py-1 font-mono text-xs font-bold text-[#00f0ff]">
+                ${focused.sharePct.toFixed(1)}%
+              </span>
+            </div>
+
+            <div class="rounded-xl border border-slate-800/90 bg-[#040814]/80 p-3.5 font-mono">
+              <div class="text-[10px] uppercase text-slate-400">
+                ${state.lang === 'km' ? 'មូលនិធិបែងចែកសម្រាប់តំបន់' : 'REGIONAL FUND ALLOCATION'}
+              </div>
+              <div class="mt-1 text-xl font-bold text-[#10b981]">${formatUsdCompact(focused.totalRegionalUsd)}</div>
+              <div class="mt-1 text-[11px] text-slate-300">
+                UES/HCV Grant Share: <span class="text-[#00f0ff]">${formatUsdCompact(focused.grantAllocationUsd)}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 flex items-center justify-between border-t border-emerald-500/20 pt-3 font-mono text-xs text-slate-300">
+            <span>${state.lang === 'km' ? 'ឃុំ/សង្កាត់៖' : 'Communes/Sangkats:'}</span>
+            <span class="font-bold text-white">${focused.communes}</span>
+          </div>
+        `;
+
+        const filtered = regions.filter((r) => {
+          if (!search) return true;
+          return r.en.toLowerCase().includes(search) || r.km.toLowerCase().includes(search);
+        });
+
+        grid.innerHTML = '';
+        if (!filtered.length) {
+          grid.innerHTML = `
+            <div class="col-span-full rounded-xl border border-slate-800 bg-[#050914]/70 p-6 text-center text-xs text-slate-400">
+              ${state.lang === 'km' ? 'រកមិនឃើញរាជធានី-ខេត្តដែលស្វែងរកទេ។' : 'No matching province or capital found.'}
+            </div>
+          `;
+          return;
+        }
+
+        filtered.forEach((r) => {
+          const isSelected = r.id === focused.id;
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = `rounded-xl border p-3 text-left transition focus:outline-none focus:ring-2 focus:ring-[#00f0ff] ${
+            isSelected
+              ? 'border-[#10b981]/60 bg-[#10b981]/15 shadow-holoEmerald'
+              : 'border-slate-800 bg-[#050914]/75 hover:border-[#00f0ff]/35'
+          }`;
+
+          btn.innerHTML = `
+            <div class="flex items-center justify-between gap-1 font-mono text-[11px]">
+              <span class="font-bold text-[#00f0ff]">${r.sharePct.toFixed(1)}%</span>
+              <span class="text-emerald-300">${formatUsdCompact(r.totalRegionalUsd)}</span>
+            </div>
+            <div class="mt-1 truncate text-xs font-bold text-white">${r.km}</div>
+            <div class="truncate text-[11px] text-slate-400">${r.en}</div>
+          `;
+
+          btn.addEventListener('click', () => {
+            state.selectedRegionId = r.id;
+            saveState();
+            renderRegionsMatrix(regions);
+          });
+
+          grid.appendChild(btn);
+        });
+      }
+
+      function renderScheduleTable(model) {
+        const tbody = document.getElementById('scheduleTableBody');
+        const q = (document.getElementById('scheduleSearchInput').value || '').trim().toLowerCase();
+        const catFilter = document.getElementById('trancheCategoryFilter').value;
+        const stFilter = document.getElementById('trancheStatusFilter').value;
+
+        const rows = model.tranches.filter((tr) => {
+          const matchesCat = catFilter === 'ALL' || tr.key === catFilter;
+          const matchesSt = stFilter === 'ALL' || tr.status === stFilter;
+          const title = `${tr.labelEn} ${tr.labelKm} ${tr.milestoneEn} ${tr.milestoneKm}`.toLowerCase();
+          const matchesQ = !q || title.includes(q);
+          return matchesCat && matchesSt && matchesQ;
+        });
+
+        tbody.innerHTML = '';
+        if (!rows.length) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="6" class="px-3 py-6 text-center text-xs text-slate-400">
+                ${state.lang === 'km' ? 'មិនមានកញ្ចប់មូលនិធិត្រូវនឹងលក្ខខណ្ឌត្រងទេ។' : 'No tranche milestones match your current filter.'}
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        rows.forEach((tr) => {
+          const releasedAmt = tr.amountUsd * model.horizonFraction;
+          const name = state.lang === 'km' ? tr.labelKm : tr.labelEn;
+          const milestone = state.lang === 'km' ? tr.milestoneKm : tr.milestoneEn;
+
+          const stBadge =
+            tr.status === 'ACTIVE'
+              ? 'border-[#10b981]/40 bg-[#10b981]/15 text-[#10b981]'
+              : tr.status === 'SCHEDULED'
+              ? 'border-[#00f0ff]/40 bg-[#00f0ff]/15 text-[#00f0ff]'
+              : 'border-amber-400/40 bg-amber-500/15 text-amber-300';
+
+          const trEl = document.createElement('tr');
+          trEl.className = 'transition hover:bg-slate-800/35';
+          trEl.innerHTML = `
+            <td class="px-3 py-3 font-sans">
+              <div class="font-bold text-white">${name}</div>
+              <div class="text-xs text-slate-400">${milestone}</div>
+            </td>
+            <td class="whitespace-nowrap px-3 py-3 text-slate-300">${tr.window}</td>
+            <td class="whitespace-nowrap px-3 py-3 font-bold" style="color:${tr.color}">${tr.pct}%</td>
+            <td class="whitespace-nowrap px-3 py-3 text-white">${formatUsdCompact(tr.amountUsd)}</td>
+            <td class="whitespace-nowrap px-3 py-3 text-emerald-300">${formatUsdCompact(releasedAmt)}</td>
+            <td class="whitespace-nowrap px-3 py-3 text-right">
+              <span class="inline-block rounded border px-2 py-0.5 text-[11px] ${stBadge}">${tr.status}</span>
+            </td>
+          `;
+          tbody.appendChild(trEl);
+        });
+      }
+
+      function announceBriefing() {
+        const model = computeFundModel();
+        const msg =
+          state.lang === 'km'
+            ? `គំរូមូលនិធិមហាសេរី MSN៖ មូលនិធិសរុប ${formatUsdCompact(model.totalPoolUsd)} ទុនបម្រុងសាច់ប្រាក់ព្យាករ ${formatUsdCompact(model.projectedLiquidityReserve)} និងផលប្រយោជន៍សហគមន៍ UES ${formatUsdCompact(model.estimatedCommunityYield)}។`
+            : `Mohaserei System Network fund model: Total pool ${formatUsdCompact(model.totalPoolUsd)}, projected liquidity reserve ${formatUsdCompact(model.projectedLiquidityReserve)}, and estimated community UES yield ${formatUsdCompact(model.estimatedCommunityYield)}.`;
+
+        if ('speechSynthesis' in window) {
+          try {
+            window.speechSynthesis.cancel();
+            const utter = new SpeechSynthesisUtterance(msg);
+            utter.lang = state.lang === 'km' ? 'km-KH' : 'en-US';
+            utter.rate = 0.98;
+            utter.onerror = () => showToast(msg, 'cyan');
+            window.speechSynthesis.speak(utter);
+            showToast(state.lang === 'km' ? 'កំពុងប្រកាសសំឡេងមូលនិធិ...' : 'Speaking Mohaserei fund briefing...', 'cyan');
+            return;
+          } catch (err) {
+            // Fallback to visual toast notification
+          }
+        }
+        showToast(msg, 'cyan');
+      }
+
+      function exportSnapshot() {
+        try {
+          const model = computeFundModel();
+          const payload = {
+            exportedAt: new Date().toISOString(),
+            platform: 'Mohaserei System Network (MSN)',
+            module: 'mohaserei_network_ecosystem_fund_model',
+            state,
+            summary: {
+              totalPoolUsd: model.totalPoolUsd,
+              allocatedUsd: model.allocatedUsd,
+              unallocatedUsd: model.unallocatedUsd,
+              projectedLiquidityReserve: model.projectedLiquidityReserve,
+              estimatedCommunityYield: model.estimatedCommunityYield,
+            },
+          };
+          const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = `mohaserei-fund-model-${Date.now()}.json`;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
+          showToast(
+            state.lang === 'km' ? 'បាននាំចេញ JSON Snapshot មូលនិធិ' : 'Exported Mohaserei fund model JSON snapshot',
+            'emerald'
+          );
+        } catch (err) {
+          showToast('Unable to export JSON snapshot in this context.', 'amber');
+        }
+      }
+
+      function applyPreset(name) {
+        const preset = PRESETS[name] || PRESETS.baseline;
+        state.preset = name;
+        state.params = { ...preset };
+        saveState();
+        applyTranslations();
+        syncSliders();
+        renderAll(computeFundModel());
+      }
+
+      function bindEvents() {
+        // Language toggle
+        document.querySelectorAll('.lang-btn').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            state.lang = btn.getAttribute('data-lang');
+            saveState();
+            applyTranslations();
+            renderAll(computeFundModel());
+          });
+        });
+
+        // Presets
+        document.querySelectorAll('.preset-btn').forEach((btn) => {
+          btn.addEventListener('click', () => applyPreset(btn.getAttribute('data-preset')));
+        });
+
+        // Voice, Export, Reset
+        document.getElementById('voiceBriefBtn').addEventListener('click', announceBriefing);
+        document.getElementById('exportJsonBtn').addEventListener('click', exportSnapshot);
+        document.getElementById('resetStateBtn').addEventListener('click', () => {
+          state = structuredClone(DEFAULT_STATE);
+          saveState();
+          applyTranslations();
+          syncSliders();
+          renderAll(computeFundModel());
+          showToast(
+            state.lang === 'km' ? 'បានកំណត់គំរូមូលនិធិឡើងវិញ' : 'Reset Mohaserei fund model parameters',
+            'amber'
+          );
+        });
+
+        // Normalize tranches to 100%
+        document.getElementById('normalizeWeightsBtn').addEventListener('click', () => {
+          const p = state.params;
+          const total = p.growthPct + p.uesPct + p.liquidityPct + p.govPct || 1;
+          const g = Math.round((p.growthPct / total) * 100);
+          const u = Math.round((p.uesPct / total) * 100);
+          const l = Math.round((p.liquidityPct / total) * 100);
+          const gov = Math.max(0, 100 - (g + u + l));
+          p.growthPct = g;
+          p.uesPct = u;
+          p.liquidityPct = l;
+          p.govPct = gov;
+          state.preset = 'baseline';
+          saveState();
+          applyTranslations();
+          syncSliders();
+          renderAll(computeFundModel());
+          showToast('Balanced capital tranches to 100%', 'emerald');
+        });
+
+        // Slider inputs
+        const sliders = [
+          { id: 'poolSizeSlider', key: 'poolMillions', parse: (v) => parseFloat(v) },
+          { id: 'trancheGrowthSlider', key: 'growthPct', parse: (v) => parseInt(v, 10) },
+          { id: 'trancheUesSlider', key: 'uesPct', parse: (v) => parseInt(v, 10) },
+          { id: 'trancheLiquiditySlider', key: 'liquidityPct', parse: (v) => parseInt(v, 10) },
+          { id: 'trancheGovSlider', key: 'govPct', parse: (v) => parseInt(v, 10) },
+          { id: 'horizonYearSlider', key: 'horizonYear', parse: (v) => parseInt(v, 10) },
+          { id: 'releaseRateSlider', key: 'releaseRatePct', parse: (v) => parseInt(v, 10) },
+        ];
+
+        sliders.forEach(({ id, key, parse }) => {
+          const el = document.getElementById(id);
+          el.addEventListener('input', () => {
+            state.params[key] = parse(el.value);
+            state.preset = 'baseline';
+            saveState();
+            applyTranslations();
+            syncSliders();
+            renderAll(computeFundModel());
+          });
+        });
+
+        // Canvas hover / touch inspection
+        const tooltip = document.getElementById('canvasTooltip');
+        const trancheCanvas = document.getElementById('trancheCanvas');
+        const trajectoryCanvas = document.getElementById('trajectoryCanvas');
+
+        function inspectTranche(clientX, clientY) {
+          if (!trancheHitBoxes.length) return;
+          const rect = trancheCanvas.getBoundingClientRect();
+          const x = clientX - rect.left;
+          const y = clientY - rect.top;
+
+          let hit = trancheHitBoxes.find(
+            (b) => x >= b.x - 8 && x <= b.x + b.w + 8 && y >= b.y - 12 && y <= b.y + b.h + 12
+          );
+          if (!hit) {
+            hit = trancheHitBoxes.reduce((best, b) => {
+              const dist = Math.hypot(x - (b.x + b.w / 2), y - (b.y + b.h / 2));
+              return !best || dist < best.dist ? { box: b, dist } : best;
+            }, null)?.box;
+          }
+          if (!hit) return;
+
+          const tr = hit.tranche;
+          tooltip.innerHTML = `
+            <div class="font-bold" style="color:${tr.color}">${state.lang === 'km' ? tr.labelKm : tr.labelEn}</div>
+            <div class="mt-0.5 text-white">Allocation: <span class="font-bold">${formatUsdCompact(tr.amountUsd)}</span> (${tr.pct}%)</div>
+            <div class="text-slate-400">Window: ${tr.window} · ${tr.status}</div>
+          `;
+          tooltip.style.left = `${Math.min(window.innerWidth - 230, clientX + 14)}px`;
+          tooltip.style.top = `${Math.max(12, clientY - 72)}px`;
+          tooltip.classList.remove('hidden');
+        }
+
+        function inspectTrajectory(clientX, clientY) {
+          if (!trajectoryHitPoints.length) return;
+          const rect = trajectoryCanvas.getBoundingClientRect();
+          const x = clientX - rect.left;
+
+          let nearest = trajectoryHitPoints[0];
+          let minDx = Math.abs(x - nearest.x);
+          for (const pt of trajectoryHitPoints) {
+            const dx = Math.abs(x - pt.x);
+            if (dx < minDx) {
+              minDx = dx;
+              nearest = pt;
+            }
+          }
+
+          tooltip.innerHTML = `
+            <div class="font-bold text-[#00f0ff]">Year ${nearest.data.year}</div>
+            <div class="mt-0.5 text-white">Deployed: <span class="font-bold text-[#00f0ff]">${formatUsdCompact(nearest.data.deployed)}</span></div>
+            <div class="text-emerald-300">Reserve: ${formatUsdCompact(nearest.data.reserve)}</div>
+          `;
+          tooltip.style.left = `${Math.min(window.innerWidth - 210, clientX + 14)}px`;
+          tooltip.style.top = `${Math.max(12, clientY - 68)}px`;
+          tooltip.classList.remove('hidden');
+        }
+
+        trancheCanvas.addEventListener('mousemove', (e) => inspectTranche(e.clientX, e.clientY));
+        trancheCanvas.addEventListener(
+          'touchstart',
+          (e) => {
+            if (e.touches && e.touches[0]) inspectTranche(e.touches[0].clientX, e.touches[0].clientY);
+          },
+          { passive: true }
+        );
+        trancheCanvas.addEventListener('mouseleave', () => tooltip.classList.add('hidden'));
+
+        trajectoryCanvas.addEventListener('mousemove', (e) => inspectTrajectory(e.clientX, e.clientY));
+        trajectoryCanvas.addEventListener(
+          'touchstart',
+          (e) => {
+            if (e.touches && e.touches[0]) inspectTrajectory(e.touches[0].clientX, e.touches[0].clientY);
+          },
+          { passive: true }
+        );
+        trajectoryCanvas.addEventListener('mouseleave', () => tooltip.classList.add('hidden'));
+
+        // Region search & select
+        document.getElementById('regionSearchInput').addEventListener('input', () => {
+          renderRegionsMatrix(computeFundModel().regions);
+        });
+        document.getElementById('regionSelect').addEventListener('change', (e) => {
+          state.selectedRegionId = e.target.value;
+          saveState();
+          renderRegionsMatrix(computeFundModel().regions);
+        });
+
+        // Tranche schedule filters
+        document.getElementById('scheduleSearchInput').addEventListener('input', () => {
+          renderScheduleTable(computeFundModel());
+        });
+        document.getElementById('trancheCategoryFilter').addEventListener('change', () => {
+          renderScheduleTable(computeFundModel());
+        });
+        document.getElementById('trancheStatusFilter').addEventListener('change', () => {
+          renderScheduleTable(computeFundModel());
+        });
+
+        // Resize redraw for both canvases
+        window.addEventListener('resize', () => {
+          const m = computeFundModel();
+          drawTrancheCanvas(m);
+          drawTrajectoryCanvas(m);
+        });
+      }
+
+      // Boot application
+      applyTranslations();
+      syncSliders();
+      renderAll(computeFundModel());
+      bindEvents();
+    })();
+  </script>
+</body>
+</html>
